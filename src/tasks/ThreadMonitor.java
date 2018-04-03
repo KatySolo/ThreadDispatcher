@@ -3,19 +3,34 @@ package tasks;
 import dispatcher.ThreadDispatcher;
 import thread_task.TaskThread;
 
+import java.io.*;
+import java.nio.file.Path;
 import java.util.Observable;
 import java.util.Observer;
 
 public class ThreadMonitor extends ThreadedTask implements Observer {
 
+    private File file;
+    public ThreadMonitor () {
+        file = new File("/Users/KatySolo/IdeaProjects/file_worker/src/output/output.txt");
+    }
     // этот метод реализовает вывод в файл списка запущенных потоков и их идентификаторов
     @Override
     public void run() {
         synchronized (ThreadDispatcher.allTasks) {
-            for (TaskThread t : ThreadDispatcher.allTasks) {
-                System.out.println(t.getName().split("@")[0] + ' ' + t.getId() + '\n');
+            BufferedWriter writer = null;
+            try {
+                writer = new BufferedWriter(new FileWriter(file));
+                for (TaskThread t : ThreadDispatcher.allTasks) {
+                    writer.append(t.getName().split("@")[0])
+                            .append(String.valueOf(' '))
+                            .append(String.valueOf(t.getId()))
+                            .append(String.valueOf('\n'));
+                }
+                writer.close();
+            } catch (IOException a) {
+                System.out.print("Problem occured");
             }
-            System.out.println("----");
         }
     }
 
