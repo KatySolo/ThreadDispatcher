@@ -11,7 +11,7 @@ public class ThreadDispatcher {
     public static final ArrayList<TaskThread> allTasks = new ArrayList<>();
     private static volatile ThreadDispatcher instance;
 
-    private ThreadDispatcher() {
+    public ThreadDispatcher() {
         Add(new ThreadMonitor());
         //То есть при создании диспетчера потоков по умолчанию сразу
         // же создается фоновый поток.

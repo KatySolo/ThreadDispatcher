@@ -18,15 +18,13 @@ public class ThreadMonitor extends ThreadedTask implements Observer {
     @Override
     public void run() {
         synchronized (ThreadDispatcher.allTasks) {
-            BufferedWriter writer = null;
+            BufferedWriter writer;
             try {
                 writer = new BufferedWriter(new FileWriter(file));
                 for (TaskThread t : ThreadDispatcher.allTasks) {
-                    writer.append(t.getName().split("@")[0])
-                            .append(String.valueOf(' '))
-                            .append(String.valueOf(t.getId()))
-                            .append(String.valueOf('\n'));
+                    writer.write(t.getName().split("@")[0] + String.valueOf(' ') + String.valueOf(t.getId()) + String.valueOf('\n'));
                 }
+
                 writer.close();
             } catch (IOException a) {
                 System.out.print("Problem occured");
