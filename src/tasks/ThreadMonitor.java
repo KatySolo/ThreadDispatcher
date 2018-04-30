@@ -12,23 +12,28 @@ public class ThreadMonitor extends ThreadedTask implements Observer {
 
     private File file;
     public ThreadMonitor () {
-        file = new File("/Users/KatySolo/IdeaProjects/file_worker/src/output/output.txt");
+        file = new File("/Users/KatySolo/IdeaProjects/ThreadDispatcher/src/out/output.txt");
     }
     // этот метод реализовает вывод в файл списка запущенных потоков и их идентификаторов
     @Override
     public void run() {
         synchronized (ThreadDispatcher.allTasks) {
             BufferedWriter writer;
-            try {
-                writer = new BufferedWriter(new FileWriter(file));
-                for (TaskThread t : ThreadDispatcher.allTasks) {
-                    writer.write(t.getName().split("@")[0] + String.valueOf(' ') + String.valueOf(t.getId()) + String.valueOf('\n'));
-                }
+//            try {
+//                writer = new BufferedWriter(new FileWriter(file));
+//                for (TaskThread t : ThreadDispatcher.allTasks) {
+//                    writer.write(t.getName().split("@")[0] + String.valueOf(' ') + String.valueOf(t.getId()) + String.valueOf('\n'));
+//                }
+//                writer.close();
+            for (TaskThread a : ThreadDispatcher.allTasks
+                    ) {
+                System.out.print(a);
 
-                writer.close();
-            } catch (IOException a) {
-                System.out.print("Problem occured");
             }
+//            } catch (IOException a) {
+//                System.out.print("Problem occured");
+//            }
+//        }
         }
     }
 
